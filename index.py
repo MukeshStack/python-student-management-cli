@@ -118,29 +118,105 @@
 # num=int(input("enter a number"))
 # num1=is_even(num)
 # print(num1)
+students = []
 
-students=[]
+# ---------- FUNCTIONS ----------
 
-def Add_students():
- name=input("enter student name :")
- marks=int(input("enter marsk :"))
- students.append({"name":name ,"marks":marks})
+def add_student():
+    name = input("Enter student name: ")
+    marks = int(input("Enter marks: "))
+    students.append({"name": name, "marks": marks})
+    print("Student added successfully")
 
 
-opt=0
-while True:
- print("1.add Student \n2.view all students\n3.Exit Program")
- opt=int(input("enter choice :"))
- if opt==3:
-  print("exited succefully")
-  break
- elif opt==2:
-   if len(students)!=0:
+def view_students():
+    if len(students) == 0:
+        print("No students available")
+        return
+    
     for student in students:
-     print( "name:",student["name"], "marks:",student["marks"])
-   else:
-    print("list is empty please enter a student details  first ")
- elif opt==1:
-  Add_students()
+        display_student(student)
 
 
+def display_student(student):
+    print("Name:", student["name"], "| Marks:", student["marks"])
+
+
+def search_student():
+    if len(students) == 0:
+        print("No students available")
+        return
+
+    input_name = input("Enter name to search: ")
+    found = False
+
+    for student in students:
+        if input_name.lower() == student["name"].lower():
+            display_student(student)
+            found = True
+
+    if not found:
+        print("Student not found")
+
+
+def delete_student():
+    if len(students) == 0:
+        print("No students available")
+        return
+
+    delete_input = input("Enter student name to delete: ")
+    found = False
+
+    for student in students:
+        if delete_input.lower() == student["name"].lower():
+            students.remove(student)
+            print("Student deleted successfully")
+            found = True
+            break
+
+    if not found:
+        print("Student not found")
+
+
+def Update_students():
+    update_input=input("Enter student name :")
+    update_marks=int(input("Enter updated marks:"))
+    found =False
+
+    for student in students:
+        if update_input.lower()==student["name"].lower():
+            student["marks"]=update_marks
+            print("updated succefully")
+            found=True
+            break
+    if not found:
+        print("update failed!")    
+
+
+# ---------- MAIN PROGRAM ----------
+
+while True:
+    print("\n1. Add Student")
+    print("2. View Students")
+    print("3. Search Student")
+    print("4. Delete Student")
+    print("5. Update")
+    print("6. Exit")
+
+    opt = int(input("Enter choice: "))
+
+    if opt == 1:
+        add_student()
+    elif opt == 2:
+        view_students()
+    elif opt == 3:
+        search_student()
+    elif opt == 4:
+        delete_student()
+    elif opt == 5:
+        Update_students()
+    elif opt == 6:
+        print("Exited successfully")
+        break
+    else:
+        print("Invalid choice")
