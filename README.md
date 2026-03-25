@@ -1,7 +1,7 @@
 # 🎓 Student Management System CLI (Python)
 
 A command-line based Student Management System built using Python.
-This project allows you to perform basic CRUD operations on student data.
+This project performs full CRUD operations with **file persistence and input validation**, making it more robust than a basic beginner project.
 
 ---
 
@@ -10,19 +10,24 @@ This project allows you to perform basic CRUD operations on student data.
 * ➕ Add student (name & marks)
 * 📋 View all students
 * 🔍 Search student by name (case-insensitive)
-* ✏️ Update student marks
+* ✏️ Update student marks (with validation)
 * ❌ Delete student
-* 📌 Menu-driven interface
+* 💾 Persistent storage using file handling (`student.txt`)
+* 🛡️ Input validation using `try-except`
+* 📌 Menu-driven CLI interface
+* ♻️ Reusable function for file saving (clean structure)
 
 ---
 
 ## 🧠 Concepts Used
 
-* Lists & Dictionaries
-* Functions (modular code)
-* Loops & Conditions
-* CRUD Operations (Create, Read, Update, Delete)
-* Basic user input handling
+* Lists & Dictionaries (data modeling)
+* Functions & Code Reusability
+* Loops & Conditional Logic
+* CRUD Operations
+* File Handling (`read`, `write`, `append`)
+* Error Handling (`try-except`)
+* Data Validation (range checking)
 
 ---
 
@@ -65,17 +70,27 @@ python main.py
 
 ```
 main.py
+student.txt   # Stores student data
 README.md
 ```
 
 ---
 
+## ⚠️ Current Limitations
+
+* Uses global state (`students` list)
+* CLI-based (no GUI yet)
+* No database (uses text file instead)
+
+---
+
 ## 🚧 Future Improvements
 
-* File handling (save/load data)
-* Input validation (try-except)
-* GUI version (Tkinter / Web)
-* Database integration (SQLite)
+* Refactor into OOP (class-based design)
+* Build REST API using Flask
+* Add database (SQLite / PostgreSQL)
+* Create web interface (React / HTML-CSS)
+* Add authentication system
 
 ---
 
@@ -90,4 +105,5 @@ README.md
 
 ## ⭐ Note
 
-This project is part of my journey to learn Python, backend development, and AI.
+This project reflects my progress from basic Python to structured problem-solving.
+Built as part of my journey toward backend development and AI.
