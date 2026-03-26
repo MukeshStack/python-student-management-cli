@@ -1,7 +1,7 @@
-# 🎓 Student Management System CLI (Python)
+# 🎓 Student Management System CLI (Python - OOP)
 
 A command-line based Student Management System built using Python.
-This project performs full CRUD operations with **file persistence and input validation**, making it more robust than a basic beginner project.
+This version is refactored using **Object-Oriented Programming (OOP)** for better structure, scalability, and maintainability.
 
 ---
 
@@ -14,18 +14,19 @@ This project performs full CRUD operations with **file persistence and input val
 * ❌ Delete student
 * 💾 Persistent storage using file handling (`student.txt`)
 * 🛡️ Input validation using `try-except`
-* 📌 Menu-driven CLI interface
-* ♻️ Reusable function for file saving (clean structure)
+* 🧱 OOP-based design (class & methods)
+* ♻️ Centralized file saving logic
 
 ---
 
 ## 🧠 Concepts Used
 
+* Object-Oriented Programming (Classes, Objects, Methods)
 * Lists & Dictionaries (data modeling)
 * Functions & Code Reusability
 * Loops & Conditional Logic
 * CRUD Operations
-* File Handling (`read`, `write`, `append`)
+* File Handling (`read`, `write`)
 * Error Handling (`try-except`)
 * Data Validation (range checking)
 
@@ -76,21 +77,22 @@ README.md
 
 ---
 
-## ⚠️ Current Limitations
+## ⚠️ Design Approach
 
-* Uses global state (`students` list)
-* CLI-based (no GUI yet)
-* No database (uses text file instead)
+* `self.students` is the main data source (in-memory)
+* File is used only for persistence (storage)
+* All operations modify memory first, then sync with file
+* Avoids inconsistent data caused by mixed file operations
 
 ---
 
 ## 🚧 Future Improvements
 
-* Refactor into OOP (class-based design)
 * Build REST API using Flask
 * Add database (SQLite / PostgreSQL)
 * Create web interface (React / HTML-CSS)
 * Add authentication system
+* Logging & error tracking
 
 ---
 
@@ -105,5 +107,4 @@ README.md
 
 ## ⭐ Note
 
-This project reflects my progress from basic Python to structured problem-solving.
-Built as part of my journey toward backend development and AI.
+This project reflects my transition from basic Python scripting to structured OOP-based development, with a focus on backend thinking and data consistency.

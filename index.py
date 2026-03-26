@@ -120,128 +120,135 @@
 # print(num1)
 
 # ---------- FUNCTIONS ----------
-def save_students_to_file():
-    f=open("student.txt","w")
-    for student in students:
-        data=student["name"]+","+str(student["marks"])+"\n"
-        f.write(data)
-    f.close()  
-
-
 def load_students():
-    result=[]
+    result = []
     try:
-     data=open("student.txt","r")
-     main_data=data.readlines()
-     data.close()
+        data = open("student.txt", "r")
+        main_data = data.readlines()
+        data.close()
     except FileNotFoundError:
-      print("File not found!")
-      return[]
+        print("File not found!")
+        return []
 
     for i in main_data:
-        parts=i.strip()
-        name=parts.split(",")
-        result.append({"name":name[0],"marks":int(name[1])})
+        parts = i.strip()
+        name = parts.split(",")
+        result.append({"name": name[0], "marks": int(name[1])})
     return result
 
 
-def add_student():
-    name = input("Enter student name: ")
-    while True:
-          try:
-            marks = int(input("Enter marks: "))
-            if marks<0 or marks>100:
-              print("Marks must be between 0 and 100")
-              continue
-            break
-          except ValueError:
-            print("Enter valid marks!")
-        
-    data = name + "," + str(marks) + "\n"
-    file=open("student.txt","a")
-    file.write(data)
-    file.close()
-    print("Student added successfully")
-    students.append({"name":name,"marks":marks})
+class StudentManager:
+    def __init__(self):
+        self.students = load_students()
+
+    def save_students_to_file(self):
+        f = open("student.txt", "w")
+        for student in self.students:
+            data = student["name"] + "," + str(student["marks"]) + "\n"
+            f.write(data)
+        f.close()
+
+    def display_student(self, student):
+        print("Name:", student["name"], "| Marks:", student["marks"])
+
+    def add_student(self):
+        name = input("Enter student name: ")
+
+        while True:
+            try:
+                marks = int(input("Enter marks: "))
+                if marks < 0 or marks > 100:
+                    print("Marks must be between 0 and 100")
+                    continue
+                break
+            except ValueError:
+                print("Enter valid marks!")
+
+        # ✅ update list first
+        self.students.append({"name": name, "marks": marks})
+
+        # ✅ then save to file
+        self.save_students_to_file()
+
+        print("Student added successfully")
+
+    def view_students(self):
+        if len(self.students) == 0:
+            print("No students available")
+            return
+
+        for student in self.students:
+            self.display_student(student)
+
+    def search_student(self):
+        if len(self.students) == 0:
+            print("No students available")
+            return
+
+        input_name = input("Enter name to search: ")
+        found = False
+
+        for student in self.students:
+            if input_name.lower() == student["name"].lower():
+                self.display_student(student)
+                found = True
+
+        if not found:
+            print("Student not found")
+
+    def delete_student(self):
+        if len(self.students) == 0:
+            print("No students available")
+            return
+
+        delete_input = input("Enter student name to delete: ")
+        found = False
+
+        for student in self.students:
+            if delete_input.lower() == student["name"].lower():
+                self.students.remove(student)
+                print("Student deleted successfully")
+                found = True
+                break
+
+        if not found:
+            print("Student not found")
+            return
+
+        self.save_students_to_file()
+
+    def update_student(self):
+        update_input = input("Enter student name: ")
+
+        while True:
+            try:
+                update_marks = int(input("Enter updated marks: "))
+                if update_marks < 0 or update_marks > 100:
+                    print("Marks must be between 0 and 100")
+                    continue
+                break
+            except ValueError:
+                print("Enter valid marks!")
+
+        found = False
+
+        for student in self.students:
+            if update_input.lower() == student["name"].lower():
+                student["marks"] = update_marks
+                print("Updated successfully")
+                found = True
+                break
+
+        if not found:
+            print("Update failed!")
+            return
+
+        self.save_students_to_file()
 
 
-def view_students():
-    if len(students) == 0:
-        print("No students available")
-        return
-    
-    for student in students:
-        display_student(student)
-
-
-def display_student(student):
-    print("Name:", student["name"], "| Marks:", student["marks"])
-
-
-def search_student():
-    if len(students) == 0:
-        print("No students available")
-        return
-
-    input_name = input("Enter name to search: ")
-    found = False
-
-    for student in students:
-        if input_name.lower() == student["name"].lower():
-            display_student(student)
-            found = True
-
-    if not found:
-        print("Student not found")
-
-
-def delete_student():
-    if len(students) == 0:
-        print("No students available")
-        return
-
-    delete_input = input("Enter student name to delete: ")
-    found = False
-
-    for student in students:
-        if delete_input.lower() == student["name"].lower():
-            students.remove(student)
-            print("Student deleted successfully")
-            found = True
-            break
-    if not found:
-          print("Student not found")
-          
-    if found:      
-       save_students_to_file()
-
-
-def update_student():
-    update_input=input("Enter student name :")
-    while True:
-        try:
-           update_marks=int(input("Enter updated marks:"))
-           if update_marks<0 or update_marks>100:
-               print("Marks must be between 0 and 100")
-               continue
-           break
-        except ValueError:
-               print("Enter valid marks")
-    found =False
-
-    for student in students:
-        if update_input.lower()==student["name"].lower():
-            student["marks"]=update_marks
-            print("Updated successfully")
-            found=True
-            break
-    if not found:
-        print("Update failed!")    
-    if found:
-         save_students_to_file()
-         
 # ---------- MAIN PROGRAM ----------
-students=load_students()
+manager = StudentManager()
+
 while True:
     print("\n1. Add Student")
     print("2. View Students")
@@ -249,21 +256,23 @@ while True:
     print("4. Delete Student")
     print("5. Update")
     print("6. Exit")
-    try :
+
+    try:
         opt = int(input("Enter choice: "))
-    except ValueError:    
-      print("Enter valid input!")
-      continue
+    except ValueError:
+        print("Enter valid input!")
+        continue
+
     if opt == 1:
-        add_student()
+        manager.add_student()
     elif opt == 2:
-        view_students()
+        manager.view_students()
     elif opt == 3:
-        search_student()
+        manager.search_student()
     elif opt == 4:
-        delete_student()
+        manager.delete_student()
     elif opt == 5:
-        update_student()
+        manager.update_student()
     elif opt == 6:
         print("Exited successfully")
         break
